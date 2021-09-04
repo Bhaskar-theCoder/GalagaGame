@@ -1,0 +1,439 @@
+<!DOCTYPE html> 
+<html>
+    <title>
+        Galaga Game
+    </title>
+    <head>
+        <style>
+            body
+            {
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-image: url(res/images/darksky.jpg);
+                background-size: cover;
+            }
+            #shooter-launcher
+            {
+                position: absolute;
+                top: 650px;
+                left: 750px;
+                width: 50px;
+                height: 75px;
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-image: url(res/images/player.png);
+                transition: transform 0.15s;
+            }
+            #launcher-tip
+            {
+                position: relative;
+                top:-3px;
+                left:23px;
+                width:4px;
+                height:5px;
+                background-color: rgb(0, 247, 255);
+            }
+            .bullet
+            {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 5px;
+                height: 9px;
+                border-radius: 10px;
+                background-color: rgb(225, 102, 65);
+                transition: all 1.5s linear;
+            }
+            #e11
+            {
+                position: absolute;
+                top:50px;
+                left:750px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e21
+            {
+                position: absolute;
+                top:100px;
+                left:680px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e22
+            {
+                position: absolute;
+                top:100px;
+                left:820px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e31
+            {
+                position: absolute;
+                top:150px;
+                left:610px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e32
+            {
+                position: absolute;
+                top:150px;
+                left:750px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e33
+            {
+                position: absolute;
+                top:150px;
+                left:890px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e41
+            {
+                position: absolute;
+                top:200px;
+                left:540px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e42
+            {
+                position: absolute;
+                top:200px;
+                left:680px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e43
+            {
+                position: absolute;
+                top:200px;
+                left:820px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e44
+            {
+                position: absolute;
+                top:200px;
+                left:960px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e51
+            {
+                position: absolute;
+                top:250px;
+                left:470px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e52
+            {
+                position: absolute;
+                top:250px;
+                left:610px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e53
+            {
+                position: absolute;
+                top:250px;
+                left:750px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e54
+            {
+                position: absolute;
+                top:250px;
+                left:890px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            #e55
+            {
+                position: absolute;
+                top:250px;
+                left:1030px;
+                width:50px;
+                height:50px;
+                background-image: url(res/images/enemy.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                opacity:1;
+            }
+            .blast 
+            {
+                width: 100px;
+                height: 100px;
+                position: absolute;
+                top: -100px;
+                left: -100px;
+            }
+            .popWindow
+            {
+                position:absolute;
+                visibility:hidden;
+                top:150px;
+                left:480px;
+                width:600px;
+                height:300px;
+                background-color: rgb(10, 4, 32);
+                border: 5px solid rgb(154, 247, 247);
+                transition: all 1s ease-out;
+            }
+            .window-overlay 
+            {
+                position: absolute;
+                top:0;
+                left:0;
+                right:0;
+                bottom:0;
+                background-color:rgba(90, 88, 95, 0.5);
+                visibility:hidden;
+                opacity:0;
+            }
+            .win
+            {
+                position:relative;
+                padding:80px;
+            }
+            .window-overlay.active
+            {
+                opacity:1;
+                visibility:visible;
+            }
+            .popWindow.active
+            {
+                opacity:1;
+                visibility:visible;
+            }
+            /* .btn
+            {
+                background-color: wheat;
+                border-radius: 100px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 1.5em;
+                line-height: 3;
+                padding: 0 2.5em;
+            } */
+        </style>
+    </head>
+    <body>
+        <div id="shooter-launcher">
+            <div id="launcher-tip"></div>
+        </div>
+        <div class="window-overlay">
+            <div class="popWindow">
+                <div class="win">
+                    <p style="color: white; font-size: 300%; text-align: center;">YOU WIN!</p>
+                    <!-- <p style="text-align: center;">
+                    <button class="btn" onclick="restart()">Restart</button>
+                    </p> -->
+                </div>
+            </div>
+        </div>
+        <div id="e11" class="alien"></div>
+        <div id="e21" class="alien"></div>
+        <div id="e22" class="alien"></div>
+        <div id="e31" class="alien"></div>
+        <div id="e32" class="alien"></div>
+        <div id="e33" class="alien"></div>
+        <div id="e41" class="alien"></div>
+        <div id="e42" class="alien"></div>
+        <div id="e43" class="alien"></div>
+        <div id="e44" class="alien"></div>
+        <div id="e51" class="alien"></div>
+        <div id="e52" class="alien"></div>
+        <div id="e53" class="alien"></div>
+        <div id="e54" class="alien"></div>
+        <div id="e55" class="alien"></div>
+        
+        <script>
+            window.onload = () => 
+            {
+                var shooter_launcher = document.getElementById("shooter-launcher");
+                var launchertip=document.getElementById("launcher-tip");
+                var launcher_translate = [0,0];
+                function checkKey(e)
+                {
+                    var speed=10;
+                    if(e.keyCode=='38')
+                    {
+                        var c=shooter_launcher.getBoundingClientRect();
+                        if(c.top>600)
+                        {
+                            launcher_translate[1]-=speed;
+                        }
+                    }
+                    else if(e.keyCode=='40')
+                    {
+                        var c=shooter_launcher.getBoundingClientRect();
+                        if(c.bottom<window.innerHeight-10)
+                        {
+                            launcher_translate[1]+=speed;
+                        }
+                    }
+                    else if(e.keyCode=='37')
+                    {
+                        var c=shooter_launcher.getBoundingClientRect();
+                        if(c.left>10)
+                        {
+                            launcher_translate[0]-=speed;
+                        }
+                    }
+                    else if(e.keyCode=='39')
+                    {
+                        var c=shooter_launcher.getBoundingClientRect();
+                        if(c.right<window.innerWidth-10)
+                        {
+                            launcher_translate[0]+=speed;
+                        }
+                    }
+                    shooter_launcher.style.transform =`translate(${launcher_translate[0]}px,${launcher_translate[1]}px)`;
+                }
+                document.onkeydown=checkKey;
+                document.onclick=shoot;              
+                function shoot(event)
+                {
+                    var bullet=document.createElement("div");
+                    bullet.classList.add("bullet");
+                    var x,y,launcherRec;
+                    launcherRec=launchertip.getBoundingClientRect();
+                    x=(launcherRec.left+launcherRec.right)/2;
+                    y=(launcherRec.bottom+launcherRec.top)/2;
+                    var animation=bullet.animate([{transform:`translate(${x-3.5}px,${y}px)`},{transform:`translate(${x-3.5}px,${10}px)`}],{duration:1500});
+                    animation.onfinish =()=>
+                    {
+                        document.body.removeChild(bullet);
+                    }
+                    document.body.appendChild(bullet);
+                }
+                collision = function (s, t)
+                {
+                return Math.max(s.top, t.top) < Math.min(s.bottom, t.bottom)
+                    && Math.min(s.right, t.right) > Math.max(s.left, t.left)
+                }
+                setInterval(() => 
+                {
+                    document.querySelectorAll(".alien").forEach(element=>
+                    {
+                        //console.log("alienCheck");
+                        var x=element.getBoundingClientRect();
+                        document.querySelectorAll(".bullet").forEach(bullet =>
+                        {
+                            var b=bullet.getBoundingClientRect();
+                            if(collision(b,x))
+                            {
+                                //console.log("collision");
+                                hit(element)
+                                document.body.removeChild(bullet);
+                            }
+                        });
+                    });
+                },10);
+                hit=function(value)
+                {
+                    //console.log("Hit");
+                    var a=value.getBoundingClientRect();
+                    var blast=document.createElement("img");
+                    blast.src="res/images/blast.gif";
+                    blast.classList.add("blast");
+                    blast.style.top = `${Math.round(a.top + a.height / 2) - 50}px`;
+                    blast.style.left = `${Math.round(a.left + a.width / 2) - 50}px`;
+                    blast.onload=()=>
+                    {
+                        document.body.removeChild(value);
+                        setTimeout(() => 
+                        {
+                            //console.log("blast");
+                            document.body.removeChild(blast);
+                        }, 1000);
+                        document.body.appendChild(blast);
+                    }
+                }   
+                setInterval(() => {
+                var count=0;
+                document.querySelectorAll(".alien").forEach(element => 
+                {
+                    count=count+1;
+                });
+                if(count==0)
+                {
+                    document.querySelector(".window-overlay").classList.add("active");
+                    document.querySelector(".popWindow").classList.add("active");
+                }
+                //console.log(count); 
+                }, 1000);
+                // restart=function()
+                // {
+                //     document.querySelector(".window-overlay").classList.remove("active");
+                //     document.querySelector(".popWindow").classList.remove("active");
+                // }
+            }
+        </script>
+    </body>
+</html>
