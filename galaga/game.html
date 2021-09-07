@@ -359,6 +359,8 @@
                 document.onclick=shoot;              
                 function shoot(event)
                 {
+                    const fireAudio = new Audio("res/audio/firing.mp3");
+                    fireAudio.play();
                     var bullet=document.createElement("div");
                     bullet.classList.add("bullet");
                     var x,y,launcherRec;
@@ -406,6 +408,8 @@
                     blast.style.left = `${Math.round(a.left + a.width / 2) - 50}px`;
                     blast.onload=()=>
                     {
+                        const killAudio= new Audio("res/audio/killenemy.mp3");
+                        killAudio.play();
                         document.body.removeChild(value);
                         setTimeout(() => 
                         {
@@ -414,20 +418,20 @@
                         }, 1000);
                         document.body.appendChild(blast);
                     }
-                }   
+                } 
                 setInterval(() => {
                 var count=0;
                 document.querySelectorAll(".alien").forEach(element => 
                 {
                     count=count+1;
                 });
-                if(count==0)
+                //console.log(count); 
+                if(count<=0)
                 {
                     document.querySelector(".window-overlay").classList.add("active");
-                    document.querySelector(".popWindow").classList.add("active");
+                    document.querySelector(".popWindow").classList.add("active");   
                 }
-                //console.log(count); 
-                }, 1000);
+                },500);
                 // restart=function()
                 // {
                 //     document.querySelector(".window-overlay").classList.remove("active");
